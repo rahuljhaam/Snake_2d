@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Snake : MonoBehaviour
@@ -13,7 +14,8 @@ public class Snake : MonoBehaviour
     private Renderer[] renderers;
     private bool isWrappingX = false;
     private bool isWrappingY = false;
-
+    public GameObject gameover;
+    
 
 
 
@@ -35,7 +37,7 @@ public class Snake : MonoBehaviour
             return;
         }
 
-        if(isWrappingX && isWrappingY)
+        if(isWrappingX || isWrappingY)
         {
             return;
         }
@@ -43,12 +45,12 @@ public class Snake : MonoBehaviour
 
         if(newPosition.x > 1 || newPosition.x < 0)
         {
-            newPosition.x = -newPosition.x;
+            newPosition.x = -newPosition.x ;
             isWrappingX = true;
         }
         if (newPosition.y > 1 || newPosition.y < 0)
         {
-            newPosition.y = -newPosition.y;
+            newPosition.y = -newPosition.y ;
             isWrappingY = true;
         }
         transform.position = newPosition;
@@ -142,11 +144,23 @@ public class Snake : MonoBehaviour
         {
             Grow();
         }else if (other.tag == "Obstacle")
-        { ResetState(); }
+        { GameOver(); }
         else if (other.tag == "Burner")
         {
             if(_segements.Count > 3)
                 Reduce(); 
         }
+    }
+    public void GameOver()
+    {
+        gameover.SetActive(true);
+    }
+    public void Reset()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void Menu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

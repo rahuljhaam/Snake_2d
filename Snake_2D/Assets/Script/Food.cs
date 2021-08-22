@@ -5,6 +5,7 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
+    public ScoreManager scoreContoller;
     
     private void Start()
     {
@@ -13,6 +14,7 @@ public class Food : MonoBehaviour
 
     private void RandomizePosition()
     {
+
         Bounds bounds = this.gridArea.bounds;
 
         float x = Random.Range(bounds.min.x, bounds.max.x);
@@ -33,6 +35,7 @@ public class Food : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            scoreContoller.IncreaseScore(1);
             RandomizePosition();
         } else if (other.tag == "Player1")
         {
